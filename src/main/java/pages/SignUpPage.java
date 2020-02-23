@@ -1,19 +1,35 @@
 package pages;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.Internet;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
-public class SignUpPage<js> {
+public class SignUpPage {
 
     private WebDriver driver;
     private Faker faker = new Faker();
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String dobString;
+    private String testDataFilePath = "./TestData.xlsx";
+
 
     public SignUpPage(WebDriver driver) {
         this.driver = driver;
@@ -24,12 +40,12 @@ public class SignUpPage<js> {
     }
 
     public String generateFirstName() {
-        String firstName = faker.name().firstName();
+        this.firstName = faker.name().firstName();
         return firstName;
     }
 
     public String generateLastName() {
-        String lastName = faker.name().lastName();
+        this.lastName = faker.name().lastName();
         return lastName;
     }
 
@@ -46,19 +62,19 @@ public class SignUpPage<js> {
     }
 
     public String generateEmail() {
-        String email = faker.internet().emailAddress();
+        this.email = faker.internet().safeEmailAddress();
         return email;
     }
 
     public String generatePassword() {
-        String password = faker.internet().password();
+        this.password = faker.internet().password(6,7,true, true, true);
         return password;
     }
 
     public String generateDOB() {
         Date dob = faker.date().birthday();
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        String dobString = df.format(dob);
+        this.dobString = df.format(dob);
         return dobString;
     }
 
@@ -75,8 +91,70 @@ public class SignUpPage<js> {
         driver.findElement(By.name("dateOfBirth")).sendKeys(dob);
     }
 
-    public String getAccountSuccessMessage() {
-        String successMsg = driver.findElement(By.cssSelector("#did-ui-view > div > section > section > h2")).getText();
-        return successMsg;
+    public String waitForAccountSuccessMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        return wait.until(ExpectedConditions.visibilityOf(
+                driver.findElement(By.xpath("//*[text() = 'Account Created!']")))).getText();
+    }
+
+    public void dataSaver() throws FileNotFoundException {
+
+        createTestDataFile(testDataFilePath);
+        try {
+
+
+            // Create Input Stream to read existing xl file
+            FileInputStream myxlsx = new FileInputStream(testDataFilePath);
+            //Create the workbook handle
+            XSSFWorkbook testDataWkBk = new XSSFWorkbook(myxlsx);
+            // Create worksheet handle
+            XSSFSheet userDataSheet = testDataWkBk.getSheetAt(0);
+            // Get the line number for the last row
+            int lastRow = userDataSheet.getLastRowNum();
+            // Print out the row number
+            System.out.println(lastRow);
+            // Create a new row in worksheet added after the last row
+            Row row = userDataSheet.createRow(++lastRow);
+            // Write to the first cell in that row
+            row.createCell(0).setCellValue(firstName);
+            row.createCell(1).setCellValue(lastName);
+            row.createCell(2).setCellValue(email);
+            row.createCell(3).setCellValue(password);
+            row.createCell(4).setCellValue(dobString);
+            // CLose the Input Stream
+            myxlsx.close();
+
+            // Start an Output Stream to write the changes
+            FileOutputStream outputFile = new FileOutputStream(new File(testDataFilePath));
+
+            // write the changes
+            testDataWkBk.write(outputFile);
+            outputFile.close();
+            System.out.println(" is successfully written");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void createTestDataFile(String testDataFilePath) throws FileNotFoundException {
+        File testDataFile = new File(testDataFilePath);
+        if (testDataFile.exists()) {
+            return;
+        }
+
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("userData");
+        try (OutputStream fileOut = new FileOutputStream(testDataFilePath)) {
+            wb.write(fileOut);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }

@@ -25,7 +25,7 @@ public class BaseTests {
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.register(new EventReporter());
         goHome();

@@ -20,8 +20,17 @@ public class HomePage {
         this.driver = driver;
     }
 
+/*    public void closePopupAd() {
+        int size = driver.findElements(By.tagName("iframe")).size();
+        System.out.println(size);
+        driver.switchTo().frame(0);
+        WebElement modalCloseButton = driver.findElement(By.cssSelector(modalCloseButtonCSSLocator));
+        modalCloseButton.click();
+    }*/
+
     public ShopDisneyPage clickShop() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        // closePopupAd();
+        //WebDriverWait wait = new WebDriverWait(driver, 30);
 
         //WebElement modalCloseButton = driver.findElement(By.className(modalCloseButtonClassLocator));
 
