@@ -14,6 +14,8 @@ import utils.WindowManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
@@ -25,7 +27,7 @@ public class BaseTests {
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
-        driver.manage().timeouts().implicitlyWait(45, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.register(new EventReporter());
         goHome();
@@ -63,6 +65,11 @@ public class BaseTests {
 
     private ChromeOptions getChromeOptions(){
         ChromeOptions options = new ChromeOptions();
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+
+        options.setExperimentalOption("prefs", prefs);
         options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
         //options.setHeadless(true);
         return options;

@@ -37,6 +37,11 @@ public class SignUpTests extends BaseTests {
         signUpPage.clickCreateAccountBtn();
         signUpPage.dataSaver();
         assertEquals(signUpPage.waitForAccountSuccessMessage(), "Account Created!", "Results text incorrect");
+        signUpPage.clickContinueBtn();
+
+        homePage.mouseOverUserMessage(signUpPage);
+        homePage.clickSignOut();
+        shopDisneyPage.clickSignInSignUp();
 
         signUpPage.toString();
     }

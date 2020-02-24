@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,7 +17,7 @@ public class HomePage {
     private String modalCloseButtonClassLocator = "sprite close";
     private String modalCloseButtonCSSLocator = "#overlaybg > p > a";
 
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -52,7 +53,7 @@ public class HomePage {
          * will need to handle it via cookie or javascript source code...
          * putting in sleep for now
          */
-            Thread.sleep(15000);
+        Thread.sleep(15000);
 
         /*wait.until(ExpectedConditions.elementToBeClickable(
                 driver.findElement(By.cssSelector(shopLinkLocator)))).click();*/
@@ -63,5 +64,20 @@ public class HomePage {
 
     public PopUpAdPage waitForPopUpAdPage() {
         return new PopUpAdPage(driver);
+    }
+
+    public void mouseOverUserMessage(SignUpPage signUpPage) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        driver.switchTo().defaultContent();
+        //driver.findElement(By.xpath("//*[text() = 'Hi "+signUpPage.getFirstName()+"!']")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(
+        driver.findElement(By.xpath("//*[contains(text(),'Hi ')]")))).click();
+        //driver.findElement(By.xpath("//*[text() = 'Continue']")).click();
+        //driver.findElement(By.cssSelector(".user:nth-child(1) .user-message")).click();
+    }
+
+    public void clickSignOut() {
+        // driver.findElement(By.className("signout")).click();
+        driver.findElement(By.linkText("Sign Out")).click();
     }
 }

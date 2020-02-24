@@ -35,6 +35,14 @@ public class SignUpPage {
         this.driver = driver;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void clickContinueBtn() {
+        driver.findElement(By.xpath("//*[text() = 'Continue']")).click();
+    }
+
     public void clickCreateAccountBtn() {
         driver.findElement(By.cssSelector(".btn")).click();
     }
@@ -67,7 +75,7 @@ public class SignUpPage {
     }
 
     public String generatePassword() {
-        this.password = faker.internet().password(6,7,true, true, true);
+        this.password = faker.internet().password(6,13,true, true, true);
         return password;
     }
 
