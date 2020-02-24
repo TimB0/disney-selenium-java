@@ -70,6 +70,7 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         driver.switchTo().defaultContent();
         //driver.findElement(By.xpath("//*[text() = 'Hi "+signUpPage.getFirstName()+"!']")).click();
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Please Wait While We Log You In')]")));
         wait.until(ExpectedConditions.elementToBeClickable(
         driver.findElement(By.xpath("//*[contains(text(),'Hi ')]")))).click();
         //driver.findElement(By.xpath("//*[text() = 'Continue']")).click();
