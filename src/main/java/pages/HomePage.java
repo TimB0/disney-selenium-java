@@ -67,18 +67,27 @@ public class HomePage {
     }
 
     public void mouseOverUserMessage(SignUpPage signUpPage) {
+        /**
+         * If we "click" on "Hi User!", none of the drop down menu items will work
+         * We have to mouse over the "Hi User!" in order for any of the drop down menu items to work
+         * This may be a bug
+         */
         WebDriverWait wait = new WebDriverWait(driver, 30);
         driver.switchTo().defaultContent();
         //driver.findElement(By.xpath("//*[text() = 'Hi "+signUpPage.getFirstName()+"!']")).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Please Wait While We Log You In')]")));
-        wait.until(ExpectedConditions.elementToBeClickable(
-        driver.findElement(By.xpath("//*[contains(text(),'Hi ')]")))).click();
+        //wait.until(ExpectedConditions.elementToBeClickable(
+        //driver.findElement(By.xpath("//*[contains(text(),'Hi ')]"))));
+        driver.getPageSource();
         //driver.findElement(By.xpath("//*[text() = 'Continue']")).click();
         //driver.findElement(By.cssSelector(".user:nth-child(1) .user-message")).click();
     }
 
     public void clickSignOut() {
         // driver.findElement(By.className("signout")).click();
-        driver.findElement(By.linkText("Sign Out")).click();
+        WebElement signout = driver.findElement(By.cssSelector(".user:nth-child(1) .signout"));
+        Actions builder = new Actions(driver);
+        //builder.moveToElement(signout).clickAndHold().perform();
+        builder.moveToElement(signout).click().perform();
     }
 }

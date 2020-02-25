@@ -42,8 +42,6 @@ public class SignUpTests extends BaseTests {
         homePage.mouseOverUserMessage(signUpPage);
         homePage.clickSignOut();
         shopDisneyPage.clickSignInSignUp();
-
-        signUpPage.toString();
     }
 
 
