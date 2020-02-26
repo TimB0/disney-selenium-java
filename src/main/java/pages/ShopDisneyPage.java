@@ -15,4 +15,8 @@ public class ShopDisneyPage {
         driver.findElement(By.cssSelector(".user:nth-child(1) .user-message")).click();
         return new LoginPopUp(driver);
     }
+
+    public void goTo() {
+        driver.get("https://www.shopdisney.com/");
+    }
 }

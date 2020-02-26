@@ -17,6 +17,7 @@ public class HomePage {
     private String modalCloseButtonClassLocator = "sprite close";
     private String modalCloseButtonCSSLocator = "#overlaybg > p > a";
 
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
@@ -72,9 +73,9 @@ public class HomePage {
          * We have to mouse over the "Hi User!" in order for any of the drop down menu items to work
          * This may be a bug
          */
-        WebDriverWait wait = new WebDriverWait(driver, 30);
         driver.switchTo().defaultContent();
         //driver.findElement(By.xpath("//*[text() = 'Hi "+signUpPage.getFirstName()+"!']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'Please Wait While We Log You In')]")));
         //wait.until(ExpectedConditions.elementToBeClickable(
         //driver.findElement(By.xpath("//*[contains(text(),'Hi ')]"))));
@@ -89,5 +90,8 @@ public class HomePage {
         Actions builder = new Actions(driver);
         //builder.moveToElement(signout).clickAndHold().perform();
         builder.moveToElement(signout).click().perform();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'See Ya Real Soon')]")));
+
     }
 }

@@ -34,8 +34,12 @@ public class SignUpTests extends BaseTests {
         signUpPage.enterNewPassword(password);
         signUpPage.enterVerifyPassword(password);
 
-        signUpPage.clickCreateAccountBtn();
+        /**
+         * Saving the Data before we click the Create Account button,
+         * just in case its needed for debugging
+         **/
         signUpPage.dataSaver();
+        signUpPage.clickCreateAccountBtn();
         assertEquals(signUpPage.waitForAccountSuccessMessage(), "Account Created!", "Results text incorrect");
         signUpPage.clickContinueBtn();
 

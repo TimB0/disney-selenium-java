@@ -109,26 +109,31 @@ public class SignUpPage {
 
         createTestDataFile(testDataFilePath);
         try {
-
-
             // Create Input Stream to read existing xl file
             FileInputStream myxlsx = new FileInputStream(testDataFilePath);
+
             //Create the workbook handle
             XSSFWorkbook testDataWkBk = new XSSFWorkbook(myxlsx);
+
             // Create worksheet handle
             XSSFSheet userDataSheet = testDataWkBk.getSheetAt(0);
+
             // Get the line number for the last row
             int lastRow = userDataSheet.getLastRowNum();
+
             // Print out the row number
             System.out.println(lastRow);
+
             // Create a new row in worksheet added after the last row
             Row row = userDataSheet.createRow(++lastRow);
+
             // Write to the first cell in that row
             row.createCell(0).setCellValue(firstName);
             row.createCell(1).setCellValue(lastName);
             row.createCell(2).setCellValue(email);
             row.createCell(3).setCellValue(password);
             row.createCell(4).setCellValue(dobString);
+
             // CLose the Input Stream
             myxlsx.close();
 
@@ -139,7 +144,6 @@ public class SignUpPage {
             testDataWkBk.write(outputFile);
             outputFile.close();
             System.out.println(" is successfully written");
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,9 +164,5 @@ public class SignUpPage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
 }
