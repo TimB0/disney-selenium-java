@@ -43,7 +43,8 @@ public class SignUpTests extends BaseTests {
         assertEquals(signUpPage.waitForAccountSuccessMessage(), "Account Created!", "Results text incorrect");
         signUpPage.clickContinueBtn();
 
-        homePage.mouseOverUserMessage(signUpPage);
+        homePage.mouseOverUserMessage();
+        homePage.verifyHiText(signUpPage.getFirstName());
         homePage.clickSignOut();
         shopDisneyPage.clickSignInSignUp();
     }

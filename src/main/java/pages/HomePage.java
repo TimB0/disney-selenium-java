@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Utilities;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HomePage {
@@ -67,7 +69,7 @@ public class HomePage {
         return new PopUpAdPage(driver);
     }
 
-    public void mouseOverUserMessage(SignUpPage signUpPage) {
+    public void mouseOverUserMessage() {
         /**
          * If we "click" on "Hi User!", none of the drop down menu items will work
          * We have to mouse over the "Hi User!" in order for any of the drop down menu items to work
@@ -93,5 +95,10 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'See Ya Real Soon')]")));
 
+    }
+
+    public void verifyHiText(String firstName) throws IOException {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Hi "+firstName+"!')]")));
     }
 }
