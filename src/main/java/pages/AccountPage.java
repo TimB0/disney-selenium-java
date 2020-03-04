@@ -10,13 +10,19 @@ import java.io.IOException;
 public class AccountPage {
 
     private WebDriver driver;
+    private WebDriverWait wait;
+
 
     public AccountPage(WebDriver driver){
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, 30);
     }
 
-    public String getActualCustomerName() throws IOException {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+    public String getActualCustomerName() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".account-name"))).getText();
+    }
+
+    public String getActualCustomerEmail() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".account-email"))).getText();
     }
 }

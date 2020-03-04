@@ -71,6 +71,7 @@ public class HomePage {
         WebElement myAccount = driver.findElement(By.cssSelector("[data-linkid='global_nav/upper_nav/upper_nav/account']"));
         Actions builder = new Actions(driver);
         builder.moveToElement(myAccount).click().perform();
+        Object wait;
         return new AccountPage(driver);
     }
 
