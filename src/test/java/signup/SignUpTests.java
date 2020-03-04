@@ -21,6 +21,7 @@ public class SignUpTests extends BaseTests {
     @Test
     public void testSuccessfulSignUp() throws InterruptedException, IOException {
 
+        goHome();
         ShopDisneyPage shopDisneyPage = homePage.clickShop();
 
         LoginPopUp loginPopUp = shopDisneyPage.clickSignInSignUp();

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTests {
 
     private EventFiringWebDriver driver;
+    private JavascriptExecutor js;
     protected HomePage homePage;
 
     @BeforeClass
@@ -30,18 +31,17 @@ public class BaseTests {
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.register(new EventReporter());
-        goHome();
+        js = (JavascriptExecutor) driver;
     }
 
 
-    @BeforeMethod
     public void goHome(){
         driver.get("https://www.disney.com/");
-        homePage = new HomePage(driver);
+        homePage = new HomePage(driver, js);
     }
 
     @AfterClass
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 
@@ -77,5 +77,9 @@ public class BaseTests {
 
     public CookieManager getCookieManager(){
         return new CookieManager(driver);
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 }

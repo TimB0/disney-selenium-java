@@ -20,6 +20,8 @@ public class Utilities {
     private static WebDriver driver;
     private static String testDataFilePath = "./TestData.xlsx";
 
+    public static String aboutDisneyUrl = "https://thewaltdisneycompany.com/";
+
     public static void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }

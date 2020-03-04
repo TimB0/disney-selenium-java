@@ -108,6 +108,7 @@ public class EventReporter implements WebDriverEventListener {
 
     @Override
     public void beforeSwitchToWindow(String s, WebDriver webDriver) {
+        System.out.println("Switching To " + s);
 
     }
 
